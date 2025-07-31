@@ -17,6 +17,12 @@ release/
 .env.test.local
 .env.production.local
 
+# API Keys and Secrets
+*.key
+*.pem
+api-keys.txt
+config.local.js
+
 # IDE files
 .vscode/
 .idea/

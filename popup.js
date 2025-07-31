@@ -32,7 +32,7 @@ class PopupManager {
 
   async presetApiKey() {
     // 预设API Key用于快速测试
-    const presetKey = 'sk-9cacc18daf0649ad9725312e6a130697';
+    const presetKey = process.env.DEEPSEEK_API_KEY || 'your-deepseek-api-key-here';
     try {
       const { apiKey } = await chrome.storage.sync.get('apiKey');
       if (!apiKey) {
@@ -83,7 +83,7 @@ class PopupManager {
     quickBtn.textContent = '🚀 一键配置测试API Key';
     
     quickBtn.addEventListener('click', async () => {
-      const testKey = 'sk-9cacc18daf0649ad9725312e6a130697';
+      const testKey = process.env.DEEPSEEK_API_KEY || 'your-deepseek-api-key-here';
       this.apiKeyInput.value = testKey;
       await this.saveConfigWithKey(testKey);
     });

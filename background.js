@@ -50,7 +50,7 @@ class LLMAssistantService {
       try {
         const { apiKey } = await chrome.storage.sync.get('apiKey');
         if (!apiKey) {
-          const presetKey = 'sk-9cacc18daf0649ad9725312e6a130697';
+          const presetKey = process.env.DEEPSEEK_API_KEY || 'your-deepseek-api-key-here';
           await chrome.storage.sync.set({ apiKey: presetKey });
           console.log('🚀 自动配置API Key完成');
         }
@@ -205,4 +205,4 @@ class LLMAssistantService {
 }
 
 // 初始化服务
-new LLMAssistantService(); 
+new LLMAssistantService();
