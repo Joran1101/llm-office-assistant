@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 LLM Assistant 多语言测试页面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #495057;
+        }
+
+        .test-text {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .test-text:hover {
+            background: #dee2e6;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .instruction {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .new-feature {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .language-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 LLM Assistant 多语言测试页面</h1>
+        
+        <div class="new-feature">
+            <h2 style="margin: 0 0 10px 0;">🎉 新功能：支持任何语言</h2>
+            <p style="margin: 0;">现在复制任何语言的内容都会弹出功能区，智能推荐最合适的功能！</p>
+        </div>
+        
+        <div class="instruction">
+            <strong>测试说明：</strong>
+            <ol>
+                <li>确保已安装并启用插件</li>
+                <li>点击下方文本框复制内容</li>
+                <li>观察功能区是否出现，以及推荐功能是否合理</li>
+                <li>尝试不同语言的内容</li>
+                <li>注意语法检查功能仅对英文内容启用</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>🇺🇸 英文内容测试</h2>
+            <p>点击下方文本进行复制，应该推荐翻译功能：</p>
+            
+            <div class="language-tag">English</div>
+            <div class="test-text" onclick="copyText(this)">
+                Artificial intelligence is transforming the way we work and live. Machine learning algorithms can now process vast amounts of data and provide insights that were previously impossible to obtain.
+            </div>
+            
+            <div class="language-tag">English - Email</div>
+            <div class="test-text" onclick="copyText(this)">
+                Dear Mr. Smith, I hope this email finds you well. I am writing to inform you about the upcoming meeting scheduled for next week. Please let me know if you have any questions.
+            </div>
+            
+            <div class="language-tag">English - Grammar Issues</div>
+            <div class="test-text" onclick="copyText(this)">
+                Their are several issues that need to be addressed before we can proceede with the project. Please make sure you have recieved all the necessary documents.
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🇨🇳 中文内容测试</h2>
+            <p>点击下方文本进行复制，应该推荐AI问答功能：</p>
+            
+            <div class="language-tag">中文</div>
+            <div class="test-text" onclick="copyText(this)">
+                人工智能正在改变我们工作和生活的方式。机器学习算法现在可以处理大量数据，并提供以前无法获得的见解。这项技术的发展速度令人惊叹。
+            </div>
+            
+            <div class="language-tag">中文 - 技术文档</div>
+            <div class="test-text" onclick="copyText(this)">
+                本系统采用微服务架构，支持高并发访问。数据库采用主从复制模式，确保数据安全和系统稳定性。前端使用React框架，后端使用Node.js开发。
+            </div>
+            
+            <div class="language-tag">中文 - 学术内容</div>
+            <div class="test-text" onclick="copyText(this)">
+                量子计算是一种基于量子力学原理的计算模式，它利用量子比特的叠加态和纠缠特性来实现并行计算，理论上可以指数级提升某些问题的计算效率。
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🌍 混合语言测试</h2>
+            <p>点击下方文本进行复制，应该检测到多语言内容：</p>
+            
+            <div class="language-tag">中英混合</div>
+            <div class="test-text" onclick="copyText(this)">
+                这是一个AI Assistant的测试，支持multiple languages。We can process both English and 中文内容，providing智能推荐功能。
+            </div>
+            
+            <div class="language-tag">技术术语混合</div>
+            <div class="test-text" onclick="copyText(this)">
+                使用React开发的SPA应用，集成了AI功能。The system supports real-time processing of用户输入，并提供intelligent responses。
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📧 邮件页面测试</h2>
+            <p>在Gmail等邮件页面，英文内容应该优先推荐邮件润色功能：</p>
+            <a href="?email=true" target="_blank" style="color: #667eea; text-decoration: none;">
+                🔗 在邮件环境中测试（新窗口）
+            </a>
+        </div>
+
+        <div class="test-section">
+            <h2>🚫 无效内容测试</h2>
+            <p>以下内容应该不会触发功能区：</p>
+            
+            <div class="language-tag">URL</div>
+            <div class="test-text" onclick="copyText(this)">
+                https://www.example.com
+            </div>
+            
+            <div class="language-tag">邮箱</div>
+            <div class="test-text" onclick="copyText(this)">
+                user@example.com
+            </div>
+            
+            <div class="language-tag">纯符号</div>
+            <div class="test-text" onclick="copyText(this)">
+                !@#$%^&*()
+            </div>
+            
+            <div class="language-tag">过短内容</div>
+            <div class="test-text" onclick="copyText(this)">
+                X
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyText(element) {
+            const text = element.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#d4edda';
+                element.style.borderColor = '#c3e6cb';
+                setTimeout(() => {
+                    element.style.background = '';
+                    element.style.borderColor = '';
+                }, 1000);
+                
+                console.log('文本已复制:', text);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+        }
+
+        // 模拟邮件页面环境
+        if (window.location.search.includes('email=true')) {
+            document.title = 'Gmail - 多语言测试邮件页面';
+            document.body.style.background = '#f6f8fc';
+            
+            // 添加邮件页面标识
+            const emailBanner = document.createElement('div');
+            emailBanner.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #1a73e8; color: white; text-align: center; padding: 8px; z-index: 1000; font-size: 14px;';
+            emailBanner.textContent = '📧 邮件页面模拟 - 英文内容将优先推荐邮件润色功能';
+            document.body.insertBefore(emailBanner, document.body.firstChild);
+            
+            // 调整页面样式
+            document.querySelector('.container').style.marginTop = '50px';
+        }
+    </script>
+</body>
+</html> 

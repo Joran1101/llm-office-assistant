@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Assistant 测试页面</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .test-text {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .test-text:hover {
+            background: #e9ecef;
+        }
+        .email-simulation {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        .ai-question {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .instruction {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #bee5eb;
+        }
+        .new-feature {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 LLM Assistant 功能测试页面</h1>
+    
+    <div class="new-feature">
+        <h2 style="margin: 0 0 10px 0;">🎉 新功能：问AI问题</h2>
+        <p style="margin: 0;">现在可以复制任何内容后，选择"问AI问题"来获得智能解答！</p>
+    </div>
+    
+    <div class="instruction">
+        <strong>测试说明：</strong>
+        <ol>
+            <li>确保已安装并启用插件</li>
+            <li>点击下方文本框复制内容</li>
+            <li>观察右上角是否出现智能提示（现在有4个选项）</li>
+            <li>点击功能按钮测试各项功能</li>
+            <li><strong>新增：尝试"问AI问题"功能</strong></li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 翻译功能测试</h2>
+        <p>点击下方文本进行复制，测试翻译功能：</p>
+        <div class="test-text" onclick="copyText(this)">
+            Artificial intelligence is transforming the way we work and live. Machine learning algorithms can now process vast amounts of data and provide insights that were previously impossible to obtain.
+        </div>
+        <div class="test-text" onclick="copyText(this)">
+            The future of technology lies in the seamless integration of human creativity and artificial intelligence capabilities.
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>✅ 语法检查测试</h2>
+        <p>以下文本包含语法错误，点击复制后测试语法检查：</p>
+        <div class="test-text" onclick="copyText(this)">
+            I am writing to inform you that the meeting have been rescheduled for tomorrow. Please let me knows if this time works for you.
+        </div>
+        <div class="test-text" onclick="copyText(this)">
+            Their are several issues that need to be addressed before we can proceede with the project.
+        </div>
+    </div>
+
+    <div class="test-section email-simulation">
+        <h2>📧 邮件润色测试（邮件页面模拟）</h2>
+        <p>在Gmail等邮件页面，插件会优先推荐邮件润色功能：</p>
+        <div class="test-text" onclick="copyText(this)">
+            Hi, I need the report ASAP. Can you send it to me today? Thanks.
+        </div>
+        <div class="test-text" onclick="copyText(this)">
+            I wanted to follow up on our conversation yesterday. Do you have any updates on the project status?
+        </div>
+    </div>
+
+    <div class="test-section ai-question">
+        <h2>🧠 AI问答功能测试（新功能）</h2>
+        <p>复制以下内容，然后选择"问AI问题"，可以问各种相关问题：</p>
+        <div class="test-text" onclick="copyText(this)">
+            Quantum computing represents a revolutionary approach to information processing that leverages quantum mechanical phenomena such as superposition and entanglement. Unlike classical computers that use bits as the basic unit of information (either 0 or 1), quantum computers use quantum bits or "qubits" that can exist in multiple states simultaneously.
+        </div>
+        <div class="test-text" onclick="copyText(this)">
+            The global supply chain crisis has highlighted the vulnerability of just-in-time manufacturing and the need for more resilient logistics networks. Companies are now investing in supply chain diversification, nearshoring, and digital transformation to mitigate future disruptions.
+        </div>
+        <div class="test-text" onclick="copyText(this)">
+            Climate change adaptation strategies include both mitigation efforts to reduce greenhouse gas emissions and adaptation measures to cope with unavoidable climate impacts. These strategies range from renewable energy deployment to ecosystem-based adaptation and climate-resilient infrastructure development.
+        </div>
+        <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.8); border-radius: 4px; font-size: 14px;">
+            <strong>💡 问题建议：</strong>
+            <ul style="margin: 5px 0; padding-left: 20px;">
+                <li>这段内容的主要观点是什么？</li>
+                <li>请用简单的语言解释这个概念</li>
+                <li>这里提到的技术有什么优势？</li>
+                <li>请总结关键要点</li>
+                <li>这个话题有什么实际应用？</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🌐 访问邮件页面测试</h2>
+        <p>访问以下链接测试邮件页面检测功能：</p>
+        <ul>
+            <li><a href="https://mail.google.com" target="_blank">Gmail</a></li>
+            <li><a href="https://outlook.live.com" target="_blank">Outlook</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function copyText(element) {
+            const text = element.textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.background = '#d4edda';
+                element.style.borderColor = '#c3e6cb';
+                setTimeout(() => {
+                    element.style.background = '';
+                    element.style.borderColor = '';
+                }, 1000);
+                
+                console.log('文本已复制:', text);
+            }).catch(err => {
+                console.error('复制失败:', err);
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+        }
+
+        // 模拟邮件页面环境
+        if (window.location.search.includes('email=true')) {
+            document.title = 'Gmail - 测试邮件页面';
+            document.body.style.background = '#f6f8fc';
+        }
+    </script>
+</body>
+</html> 

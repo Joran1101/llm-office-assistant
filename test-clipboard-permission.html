@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剪切板权限测试 - LLM Assistant</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .copy-text {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px dashed #6c757d;
+            margin: 10px 0;
+            user-select: all;
+        }
+        .log-area {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.unknown { background: #ffc107; color: #856404; }
+        .status.granted { background: #d4edda; color: #155724; }
+        .status.denied { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>🔒 剪切板权限测试页面</h1>
+    
+    <div class="test-section">
+        <h2>📋 测试步骤</h2>
+        <ol>
+            <li><strong>安装扩展</strong>：确保 LLM Assistant 扩展已安装并启用</li>
+            <li><strong>复制文本</strong>：选择下面的测试文本并复制 (Cmd/Ctrl+C)</li>
+            <li><strong>观察权限对话框</strong>：应该弹出权限请求对话框</li>
+            <li><strong>点击允许</strong>：在对话框中点击"允许访问剪切板"</li>
+            <li><strong>验证功能</strong>：应该看到 LLM Assistant 的功能选择框</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 测试文本</h2>
+        <p>选择以下文本并复制以测试权限请求：</p>
+        <div class="copy-text" id="testText1">
+            Hello, this is a test text for clipboard permission testing. 你好，这是用于测试剪切板权限的文本。
+        </div>
+        <div class="copy-text" id="testText2">
+            另一段测试文本：The quick brown fox jumps over the lazy dog. 这是一个包含中英文的测试段落。
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 权限状态检查</h2>
+        <div id="permissionStatus" class="status unknown">
+            检查中...
+        </div>
+        <button class="test-button" onclick="checkPermissions()">🔄 重新检查权限</button>
+        <button class="test-button" onclick="testClipboardRead()">📖 测试读取剪切板</button>
+        <button class="test-button" onclick="clearLogs()">🗑️ 清空日志</button>
+        <button class="test-button" onclick="resetExtensionState()">🔄 重置扩展状态</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 实时日志</h2>
+        <div id="logArea" class="log-area">等待操作...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>❓ 常见问题</h2>
+        <details>
+            <summary><strong>权限对话框没有弹出</strong></summary>
+            <ul>
+                <li>确保扩展已安装并启用</li>
+                <li>检查浏览器控制台是否有错误</li>
+                <li>尝试刷新页面重新加载扩展</li>
+                <li>检查扩展是否有权限在当前页面运行</li>
+            </ul>
+        </details>
+        <details>
+            <summary><strong>权限对话框一闪而过</strong></summary>
+            <ul>
+                <li>这通常表示权限请求逻辑有问题</li>
+                <li>请查看控制台日志获取详细信息</li>
+                <li>尝试点击"重置扩展状态"按钮</li>
+            </ul>
+        </details>
+        <details>
+            <summary><strong>获得权限后功能不工作</strong></summary>
+            <ul>
+                <li>检查剪切板内容是否有效（不是空白或太短）</li>
+                <li>确保复制操作成功执行</li>
+                <li>查看控制台日志了解详细错误</li>
+            </ul>
+        </details>
+    </div>
+
+    <script>
+        let logCount = 0;
+        
+        function log(message) {
+            const logArea = document.getElementById('logArea');
+            const timestamp = new Date().toLocaleTimeString();
+            logCount++;
+            logArea.textContent += `[${timestamp}] ${logCount}: ${message}\n`;
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+
+        function clearLogs() {
+            document.getElementById('logArea').textContent = '日志已清空...\n';
+            logCount = 0;
+        }
+
+        async function checkPermissions() {
+            log('🔍 开始检查剪切板权限状态...');
+            
+            try {
+                if (!navigator.permissions) {
+                    log('❌ 浏览器不支持权限API');
+                    updatePermissionStatus('unknown', '浏览器不支持权限API');
+                    return;
+                }
+
+                const permission = await navigator.permissions.query({ name: 'clipboard-read' });
+                log(`📋 剪切板权限状态: ${permission.state}`);
+                
+                updatePermissionStatus(permission.state, `剪切板权限状态: ${permission.state}`);
+                
+                // 监听权限变化
+                permission.onchange = () => {
+                    log(`🔄 权限状态变化: ${permission.state}`);
+                    updatePermissionStatus(permission.state, `剪切板权限状态: ${permission.state}`);
+                };
+                
+            } catch (error) {
+                log(`❌ 检查权限失败: ${error.message}`);
+                updatePermissionStatus('unknown', `检查失败: ${error.message}`);
+            }
+        }
+
+        function updatePermissionStatus(state, message) {
+            const statusDiv = document.getElementById('permissionStatus');
+            statusDiv.className = `status ${state}`;
+            statusDiv.textContent = message;
+        }
+
+        async function testClipboardRead() {
+            log('📖 测试直接读取剪切板...');
+            
+            try {
+                const text = await navigator.clipboard.readText();
+                log(`✅ 成功读取剪切板: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`);
+            } catch (error) {
+                log(`❌ 读取剪切板失败: ${error.name} - ${error.message}`);
+                if (error.name === 'NotAllowedError') {
+                    log('💡 提示: 需要用户授权才能读取剪切板');
+                }
+            }
+        }
+
+        async function resetExtensionState() {
+            log('🔄 重置扩展状态...');
+            
+            try {
+                // 清除扩展存储
+                if (typeof chrome !== 'undefined' && chrome.storage) {
+                    await chrome.storage.local.clear();
+                    log('✅ 已清除扩展存储');
+                } else {
+                    log('ℹ️ 无法访问扩展存储API');
+                }
+                
+                // 重新加载页面
+                setTimeout(() => {
+                    log('🔄 即将重新加载页面...');
+                    location.reload();
+                }, 1000);
+                
+            } catch (error) {
+                log(`❌ 重置失败: ${error.message}`);
+            }
+        }
+
+        // 监听复制事件
+        document.addEventListener('copy', (event) => {
+            const selection = window.getSelection().toString();
+            if (selection) {
+                log(`📋 检测到复制事件: "${selection.substring(0, 30)}${selection.length > 30 ? '...' : ''}"`);
+                log('⏳ 等待扩展处理...');
+            }
+        });
+
+        // 页面加载时检查权限
+        window.addEventListener('load', () => {
+            log('🚀 页面加载完成，开始检查权限状态');
+            checkPermissions();
+            
+            // 检查扩展是否加载
+            setTimeout(() => {
+                if (typeof window.llmAssistant !== 'undefined') {
+                    log('✅ 检测到 LLM Assistant 扩展');
+                } else {
+                    log('⚠️ 未检测到 LLM Assistant 扩展，请确保扩展已安装并启用');
+                }
+            }, 1000);
+        });
+
+        // 添加测试文本点击复制功能
+        document.querySelectorAll('.copy-text').forEach((element, index) => {
+            element.addEventListener('click', () => {
+                const range = document.createRange();
+                range.selectNodeContents(element);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                try {
+                    document.execCommand('copy');
+                    log(`📋 已复制测试文本 ${index + 1}`);
+                } catch (error) {
+                    log(`❌ 复制失败: ${error.message}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

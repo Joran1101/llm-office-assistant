@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 400px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .header p {
+      margin: 8px 0 0 0;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section h3 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .status.success {
+      background: rgba(40, 167, 69, 0.3);
+      border: 1px solid rgba(40, 167, 69, 0.5);
+    }
+
+    .status.error {
+      background: rgba(220, 53, 69, 0.3);
+      border: 1px solid rgba(220, 53, 69, 0.5);
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .features li {
+      padding: 8px 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .features li:before {
+      content: "✓ ";
+      color: #4CAF50;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🤖 LLM Office Assistant</h1>
+    <p>智能剪贴板助手</p>
+  </div>
+
+  <div class="section">
+    <h3>⚙️ API 配置</h3>
+    <div class="input-group">
+      <label for="apiKey">DeepSeek API Key：</label>
+      <input type="password" id="apiKey" placeholder="请输入您的DeepSeek API Key">
+    </div>
+    <button id="saveConfig" class="btn">保存配置</button>
+    <div id="configStatus"></div>
+  </div>
+
+  <div class="section">
+    <h3>🚀 核心功能</h3>
+    <ul class="features">
+      <li>智能检测英文剪贴板内容</li>
+      <li>一键中文翻译</li>
+      <li>英文语法检查</li>
+      <li>邮件内容润色</li>
+      <li>邮件页面智能识别</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3>💡 使用说明</h3>
+    <p style="font-size: 14px; line-height: 1.5; margin: 0; opacity: 0.9;">
+      1. 配置API Key后，复制英文内容<br>
+      2. 自动弹出功能选择提示<br>
+      3. 点击所需功能处理文本<br>
+      4. 在邮件页面会智能推荐润色功能
+    </p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html> 

@@ -1,0 +1,1076 @@
+/* LLM Assistant Content Script 样式 */
+.llm-assistant-prompt {
+  position: fixed;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 0;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  max-width: 320px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideIn 0.3s ease-out;
+  min-height: auto;
+  height: auto;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 标题栏样式 */
+.llm-assistant-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.llm-assistant-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.llm-assistant-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.llm-assistant-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.llm-assistant-content {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 0 12px 12px;
+}
+
+.llm-assistant-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.3s ease;
+  padding: 16px;
+}
+
+/* 动态布局：根据按钮数量调整 */
+.llm-assistant-actions[data-action-count="1"] {
+  gap: 0;
+}
+
+.llm-assistant-actions[data-action-count="2"] {
+  gap: 10px;
+}
+
+.llm-assistant-actions[data-action-count="3"] {
+  gap: 8px;
+}
+
+.llm-assistant-actions[data-action-count="4"] {
+  gap: 8px;
+}
+
+.llm-assistant-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: buttonSlideIn 0.3s ease-out forwards;
+}
+
+@keyframes buttonSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 按钮依序出现动画 */
+.llm-assistant-btn:nth-child(1) { animation-delay: 0.1s; }
+.llm-assistant-btn:nth-child(2) { animation-delay: 0.15s; }
+.llm-assistant-btn:nth-child(3) { animation-delay: 0.2s; }
+.llm-assistant-btn:nth-child(4) { animation-delay: 0.25s; }
+
+.llm-assistant-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.llm-assistant-btn.recommended {
+  background: rgba(255, 215, 0, 0.3) !important;
+  border: 1px solid rgba(255, 215, 0, 0.5) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* 禁用状态按钮 */
+.llm-assistant-btn.disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background: rgba(108, 117, 125, 0.1) !important;
+  color: #6c757d !important;
+  border-color: #6c757d !important;
+}
+
+.llm-assistant-btn.disabled:hover {
+  transform: none !important;
+  background: rgba(108, 117, 125, 0.1) !important;
+  box-shadow: none !important;
+}
+
+/* 内容类型提示 */
+.llm-assistant-hint {
+  margin: 8px 12px 12px 12px !important;
+  padding: 10px 16px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-align: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.3px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.llm-assistant-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.llm-assistant-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.llm-assistant-result {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: #333;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.llm-assistant-result h3 {
+  margin: 0 0 16px 0;
+  color: #667eea;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.llm-assistant-result-content {
+  margin-bottom: 20px;
+}
+
+.llm-assistant-result-original {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 4px solid #dee2e6;
+}
+
+.llm-assistant-result-processed {
+  background: #e7f3ff;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.llm-assistant-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.llm-assistant-result-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.llm-assistant-result-btn:hover {
+  background: #5a6fd8;
+  transform: translateY(-1px);
+}
+
+.llm-assistant-result-btn.secondary {
+  background: #6c757d;
+}
+
+.llm-assistant-result-btn.secondary:hover {
+  background: #5a6268;
+}
+
+.llm-assistant-result-btn.regenerate {
+  background: #28a745;
+}
+
+.llm-assistant-result-btn.regenerate:hover {
+  background: #218838;
+}
+
+.llm-assistant-result-btn.regenerate:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.llm-assistant-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.llm-assistant-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.llm-assistant-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  backdrop-filter: blur(2px);
+}
+
+/* 返回提示样式 */
+.llm-assistant-return-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  animation: slideInFromBottom 0.3s ease-out, fadeOut 0.5s ease-out 2.5s forwards;
+  max-width: 280px;
+}
+
+.llm-assistant-hint-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+} 
+
+/* 结果弹窗样式增强 */
+.llm-result-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.llm-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.llm-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.llm-action-icon {
+    font-size: 20px;
+}
+
+.llm-action-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.llm-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 重新生成按钮样式 - 关键新增！ */
+.llm-regenerate-btn {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    backdrop-filter: blur(10px) !important;
+    white-space: nowrap !important;
+}
+
+.llm-regenerate-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    transform: translateY(-1px) !important;
+}
+
+.llm-regenerate-btn:active {
+    transform: translateY(0) !important;
+}
+
+.llm-regenerate-btn:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.llm-close-btn {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+.llm-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1.1) !important;
+}
+
+.llm-popup-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.llm-original-text, .llm-result-text {
+    margin-bottom: 16px;
+}
+
+.llm-original-text strong, .llm-result-text strong {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.llm-text-content {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px;
+    line-height: 1.6;
+    font-size: 14px;
+    color: #495057;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.llm-result-content {
+    background: #f0f9ff;
+    border-color: #bae6fd;
+    color: #0c4a6e;
+}
+
+.llm-popup-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #e9ecef;
+    background: #f8f9fa;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.llm-copy-btn, .llm-save-btn {
+    background: #4f46e5 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.llm-copy-btn:hover, .llm-save-btn:hover {
+    background: #4338ca !important;
+    transform: translateY(-1px) !important;
+}
+
+.llm-save-btn {
+    background: #059669 !important;
+}
+
+.llm-save-btn:hover {
+    background: #047857 !important;
+}
+
+/* 通知样式 */
+.llm-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10002;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    border-left: 4px solid #4f46e5;
+}
+
+.llm-notification-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.llm-notification-success {
+    border-left-color: #059669;
+}
+
+.llm-notification-error {
+    border-left-color: #dc2626;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .llm-result-popup {
+        width: 95%;
+        max-width: none;
+        margin: 20px;
+    }
+    
+    .llm-popup-header {
+        padding: 12px 16px;
+    }
+    
+    .llm-header-right {
+        gap: 6px;
+    }
+    
+    .llm-regenerate-btn {
+        padding: 4px 8px !important;
+        font-size: 12px !important;
+    }
+    
+    .llm-popup-content {
+        padding: 16px;
+    }
+    
+    .llm-popup-footer {
+        padding: 12px 16px;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* === 多轮对话界面样式 === */
+.llm-assistant-conversation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  z-index: 10000;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.llm-assistant-conversation.active {
+  transform: translateX(0);
+}
+
+/* 最小化状态 */
+.llm-assistant-conversation.minimized {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  border-radius: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.llm-assistant-conversation.minimized:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.llm-assistant-minimized-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.llm-assistant-conversation.minimized .llm-assistant-minimized-icon {
+  display: flex;
+}
+
+.llm-assistant-conversation.minimized .llm-assistant-conversation-header,
+.llm-assistant-conversation.minimized .llm-assistant-conversation-content {
+  display: none;
+}
+
+/* 对话头部 */
+.llm-assistant-conversation-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.llm-assistant-conversation-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.llm-assistant-conversation-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.llm-assistant-btn-small {
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.llm-assistant-btn-small:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.llm-assistant-btn-small.minimize-btn {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: rgba(255, 193, 7, 0.4);
+}
+
+.llm-assistant-btn-small.minimize-btn:hover {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.llm-assistant-btn-small.secondary {
+  background: rgba(220, 53, 69, 0.2);
+  border-color: rgba(220, 53, 69, 0.4);
+}
+
+.llm-assistant-btn-small.secondary:hover {
+  background: rgba(220, 53, 69, 0.3);
+}
+
+/* 对话内容区域 */
+.llm-assistant-conversation-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 参考内容区域 */
+.llm-assistant-reference-section {
+  padding: 16px 20px;
+  background: #ffffff;
+  border-bottom: 2px solid #667eea;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.llm-assistant-reference-section h4 {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  color: #000000;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.llm-assistant-reference-toggle {
+  cursor: pointer;
+  color: #667eea;
+  font-size: 11px;
+  user-select: none;
+}
+
+.llm-assistant-reference-text {
+  background: #ffffff;
+  border: 2px solid #667eea;
+  border-radius: 6px;
+  padding: 12px;
+  max-height: 60px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #000000;
+  font-weight: 600;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: max-height 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.llm-assistant-reference-text.collapsed {
+  max-height: 30px;
+}
+
+.llm-assistant-reference-text.expanded {
+  max-height: 120px;
+}
+
+/* 对话历史区域 */
+.llm-assistant-conversation-history {
+  flex: 1;
+  padding: 12px 16px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  min-height: 0;
+}
+
+/* 自定义滚动条 */
+.llm-assistant-conversation-history::-webkit-scrollbar {
+  width: 4px;
+}
+
+.llm-assistant-conversation-history::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+.llm-assistant-conversation-history::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.3);
+  border-radius: 2px;
+}
+
+.llm-assistant-conversation-history::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.5);
+}
+
+/* 空对话状态 */
+.llm-assistant-empty-conversation {
+  text-align: center;
+  color: #000000;
+  font-weight: 600;
+  margin-top: 60px;
+}
+
+.empty-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  color: #a0aec0;
+}
+
+.empty-tip {
+  font-size: 13px;
+  color: #000000;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+/* 消息样式 */
+.llm-assistant-message {
+  margin-bottom: 16px;
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.message-role {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.message-time {
+  color: #000000;
+  font-weight: 500;
+}
+
+.message-content {
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* 用户消息 */
+.user-message .message-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-left: 40px;
+  border-bottom-right-radius: 4px;
+  font-size: 13px;
+  padding: 10px 12px;
+}
+
+.user-message .message-role {
+  color: #667eea;
+}
+
+/* AI消息 */
+.ai-message .message-content {
+  background: #ffffff;
+  border: 2px solid #667eea;
+  color: #000000;
+  font-weight: 600;
+  margin-right: 20px;
+  border-bottom-left-radius: 4px;
+  font-size: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ai-message .message-role {
+  color: #28a745;
+}
+
+/* 错误消息 */
+.error-message .message-content {
+  background: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.error-message .message-role {
+  color: #dc3545;
+}
+
+/* AI思考状态 */
+.thinking-message .message-content {
+  background: #e3f2fd;
+  border-color: #bbdefb;
+  color: #1976d2;
+  text-align: center;
+}
+
+.thinking-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.thinking-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1976d2;
+  animation: thinkingPulse 1.4s infinite ease-in-out;
+}
+
+.thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
+.thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes thinkingPulse {
+  0%, 80%, 100% { 
+    transform: scale(0);
+    opacity: 0.5;
+  } 
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 输入区域 */
+.llm-assistant-conversation-input-area {
+  padding: 16px 20px;
+  border-top: 2px solid #667eea;
+  background: #ffffff;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.llm-assistant-input-container {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.llm-assistant-conversation-input {
+  flex: 1;
+  min-height: 40px;
+  max-height: 80px;
+  padding: 12px 16px;
+  border: 3px solid #667eea;
+  border-radius: 18px;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.4;
+  resize: none;
+  outline: none;
+  transition: all 0.2s;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.llm-assistant-conversation-input:focus {
+  border-color: #667eea;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+}
+
+.llm-assistant-conversation-input::placeholder {
+  color: #000000 !important;
+  opacity: 0.6 !important;
+  font-weight: 600 !important;
+}
+
+.llm-assistant-conversation-input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* 发送按钮 */
+.llm-assistant-send-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 60px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.llm-assistant-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.llm-assistant-send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.send-icon {
+  font-size: 16px;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .llm-assistant-conversation {
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+  }
+  
+  .llm-assistant-conversation.minimized {
+    width: 50px;
+    height: 50px;
+    right: 15px;
+  }
+  
+  .user-message .message-content {
+    margin-left: 20px;
+    font-size: 12px;
+  }
+  
+  .ai-message .message-content {
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  
+  .llm-assistant-conversation-input {
+    font-size: 12px;
+  }
+  
+  .llm-assistant-send-btn {
+    min-width: 50px;
+    font-size: 11px;
+  }
+}
+
+/* 遮罩层优化 */
+.llm-assistant-overlay {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+} 
